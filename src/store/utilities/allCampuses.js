@@ -49,20 +49,20 @@ export const addCampusThunk = (campus, ownProps) => (dispatch) => {
     .post("/api/campuses", campus)
     .then((res) => res.data)
     .then((newCampus) => {
-      const tweakedCampus = { ...newCampus, students: [] };
-      dispatch(addCampus(tweakedCampus));
+      dispatch(addCampus(newCampus));
       ownProps.history.push(`/campuses/${newCampus.id}`);
     })
     .catch((err) => console.log(err));
 };
 
-export const editCampusThunk = (id, campus) => (dispatch) => {
+export const editCampusThunk = (id, campus, ownProps) => (dispatch) => {
   return axios
     .put(`/api/campuses/${id}`, campus)
     .then((res) => res.data)
     .then((updatedCampus) => {
-      dispatch(editCampus(updatedCampus));
-    })
+    dispatch(editCampus(updatedCampus))
+    ownProps.history.push(`/campuses/${updatedCampus.id}`);
+  })
     .catch((err) => console.log(err));
 };
 
@@ -82,12 +82,8 @@ const reducer = (state = [], action) => {
     case ADD_CAMPUS:
       return [...state, action.payload];
     case EDIT_CAMPUS:
-      return state.map((campus) =>
-        campus.id === action.payload.id ? action.payload : campus
-      );
-
+      return [...state, action.payload];
     case DELETE_CAMPUS:
-      console.log(action.payload);
       return state.filter((campus) => campus.id !== action.payload);
     default:
       return state;

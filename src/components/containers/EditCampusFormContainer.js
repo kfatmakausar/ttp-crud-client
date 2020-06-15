@@ -31,7 +31,6 @@ class EditCampusFormContainer extends Component {
     e.preventDefault();
     const id = this.props.match.params.id;
     this.props.editCampus(id, this.state);
-    this.props.history.push(`/campuses/${id}`);
   };
 
   render() {
@@ -52,10 +51,10 @@ const mapState = (state) => {
   return { campus: state.campus };
 };
 
-const mapDispatch = (dispatch) => {
+const mapDispatch = (dispatch, ownProps) => {
   return {
     fetchCampus: (id) => dispatch(fetchCampusThunk(id)),
-    editCampus: (id, campus) => dispatch(editCampusThunk(id, campus)),
+    editCampus: (id, campus) => dispatch(editCampusThunk(id, campus, ownProps)),
   };
 };
 

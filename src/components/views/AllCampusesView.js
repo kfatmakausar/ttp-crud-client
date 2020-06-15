@@ -10,23 +10,21 @@ const AllCampusesView = (props) => {
 
   return (
     <div className="all-campuses">
-      <Link to="/campuses/new" className="add-campus">
-        New Campus
-      </Link>
-      <div>
-        {props.allCampuses.map((campus) => (
-          <div key={campus.id}>
-            <Link to={`/campuses/${campus.id}`}>
-              <h1>{campus.name}</h1>
-            </Link>
-            <img src={campus.imageUrl} width="200px" alt={campus.name} />
-            <p>{campus.students.length} students</p>
-            <button onClick={() => props.handleDelete(campus.id)}>
-              Delete
-            </button>
+        <Link className="redbg" to={`/campuses/new`}>New Campus</Link>
+     
+      {props.allCampuses.map((campus) => (
+        <div className ="redBorder" key={campus.id}>
+          <Link to={`/campuses/${campus.id}`}>
+            <h1>{campus.name}</h1>
+          </Link>
+          <img src={campus.imageUrl} width="200px" alt={campus.name} />
+          <p>{campus.students.length} students</p>
+          <div>
+          <button onClick={() => props.handleDelete(campus.id)}>Delete</button>
+          <button><Link to={`/campuses/${campus.id}/edit`}>Edit</Link></button>
           </div>
-        ))}
-      </div>
+        </div>
+      ))}
     </div>
   );
 };
